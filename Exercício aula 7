@@ -1,0 +1,48 @@
+#Exercício aula 7 
+
+#1. Extraia em padrão ff todas as bases de situação final de alunos disponíveis neste endereço: http://dados.recife.pe.gov.br/dataset/situacao-final-dos-alunos-por-periodo-letivo
+#2. Junte todas as bases extraídas em um único objeto ff
+#3. Limpe sua staging area
+#4. Exporte a base única em formato nativo do R
+
+
+#Extraindo as bases de dados sobre a situação final de alunos da rede pública de ensino da cidade do Recife de 2011 até 2020
+
+library(ff)
+
+ResultadoFinal2020Raw <- read.csv.ffdf (file="http://dados.recife.pe.gov.br/dataset/ce5168d4-d925-48f5-a193-03d4e0f587c7/resource/9dc84eed-acdd-4132-9f1a-a64f7a71b016/download/situacaofinalalunos2020.csv")
+
+ResultadoFinal2019Raw <- read.csv.ffdf (file="http://dados.recife.pe.gov.br/dataset/ce5168d4-d925-48f5-a193-03d4e0f587c7/resource/3b03a473-8b20-4df4-8628-bec55541789e/download/situacaofinalalunos2019.csv")
+
+ResultadoFinal2018Raw <- read.csv.ffdf (file="http://dados.recife.pe.gov.br/dataset/ce5168d4-d925-48f5-a193-03d4e0f587c7/resource/8f3196b8-c21a-4c0d-968f-e2b265be4def/download/situacaofinalalunos2018.csv")
+
+ResultadoFinal2017Raw <- read.csv.ffdf (file="http://dados.recife.pe.gov.br/dataset/ce5168d4-d925-48f5-a193-03d4e0f587c7/resource/70c4e6fc-91d2-4a73-b27a-0ad6bda1c84d/download/situacaofinalalunos2017.csv")
+
+ResultadoFinal2016Raw <- read.csv.ffdf (file="http://dados.recife.pe.gov.br/dataset/ce5168d4-d925-48f5-a193-03d4e0f587c7/resource/f42a3c64-b2d7-4e2f-91e5-684dcd0040b9/download/situacaofinalalunos2016.csv")
+ 
+ResultadoFinal2015Raw <- read.csv.ffdf (file="http://dados.recife.pe.gov.br/dataset/ce5168d4-d925-48f5-a193-03d4e0f587c7/resource/264f0a37-ad1c-4308-9998-4f0bd3c6561f/download/situacaofinalalunos2015.csv")
+
+ResultadoFinal2014Raw <- read.csv.ffdf (file="http://dados.recife.pe.gov.br/dataset/ce5168d4-d925-48f5-a193-03d4e0f587c7/resource/0a2aec2f-9634-4408-bbb4-37e1f9c74aa1/download/situacaofinalalunos2014.csv")
+
+ResultadoFinal2013Raw <- read.csv.ffdf (file="http://dados.recife.pe.gov.br/dataset/ce5168d4-d925-48f5-a193-03d4e0f587c7/resource/95eb9ea8-cd75-4efa-a1ba-ba869f4e92b9/download/situacaofinalalunos2013.csv")
+
+ResultadoFinal2012Raw <- read.csv.ffdf (file="http://dados.recife.pe.gov.br/dataset/ce5168d4-d925-48f5-a193-03d4e0f587c7/resource/f6633c26-be36-4c27-81cb-e77d90316cff/download/situacaofinalalunos2012.csv")
+
+ResultadoFinal2011Raw <- read.csv.ffdf (file="http://dados.recife.pe.gov.br/dataset/ce5168d4-d925-48f5-a193-03d4e0f587c7/resource/9a694ab5-99ab-4ff1-ac6b-c97917c6a762/download/situacaofinalalunos2011.csv")
+
+
+
+# Juntar as bases de dados 
+
+library(ffbase) 
+
+resultadofinalRecifeRaw <- ffdfrbind.fill(ResultadoFinal2011Raw, ResultadoFinal2012Raw, ResultadoFinal2013Raw, ResultadoFinal2014Raw, ResultadoFinal2015Raw, ResultadoFinal2016Raw, ResultadoFinal2017Raw, ResultadoFinal2018Raw, ResultadoFinal2019Raw, ResultadoFinal2020Raw )
+
+# Limpeza da staging area 
+ls ()
+
+rm(list=c("ResultadoFinal2011Raw", "ResultadoFinal2012Raw", "ResultadoFinal2013Raw", "ResultadoFinal2014Raw", "ResultadoFinal2015Raw", "ResultadoFinal2016Raw", "ResultadoFinal2017Raw", "ResultadoFinal2018Raw", "ResultadoFinal2019Raw", "ResultadoFinal2020Raw"))
+
+# Exportar a base única em formato nativo do R
+
+saveRDS(resultadofinalRecifeRaw, "bases_tratadas/resultadofinalRecifeRaw.rds")
